@@ -26,4 +26,7 @@ migrate-up:
 migrate-down:
 	${loc}/migrate -source file:./database/migrations -database ${dsn} -verbose down
 
+test:
+	go test -v -cover ./...
+
 .PHONY: initialize startdb createdb

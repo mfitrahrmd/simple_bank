@@ -10,7 +10,7 @@ import (
 func testCreateAccount(t *testing.T) Account {
 	mockCreateAccount := CreateAccountParams{
 		Owner:    "Rama",
-		Balance:  90.89,
+		Balance:  100,
 		Currency: "USD",
 	}
 

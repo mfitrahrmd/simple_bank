@@ -15,7 +15,7 @@ func TestStore_TransferTx(t *testing.T) {
 	arg := TransferTxParams{
 		FromAccountID: sender.ID,
 		ToAccountID:   receiver.ID,
-		Amount:        20,
+		Amount:        10,
 	}
 
 	results := make(chan TransferTxResult)

@@ -41,6 +41,9 @@ jobs:
         with:
           go-version: 1.19
 
+      - name: Get migrations tool
+        run: make initialize
+
       - name: Run migrations
         run: make migrate-up
 

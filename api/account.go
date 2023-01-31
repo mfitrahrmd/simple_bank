@@ -36,3 +36,28 @@ func (s *Server) CreateAccount(c *gin.Context) {
 
 	c.JSON(http.StatusCreated, createdAccount)
 }
+
+type getAccountRequest struct {
+	ID int32 `uri:"id" binding:"required,min=1"`
+}
+
+func (s *Server) GetAccount(c *gin.Context) {
+	var req getAccountRequest
+
+	if err := c.ShouldBindUri(&req); err != nil {
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
+			"message": err.Error(),
+		})
+		return
+	}
+
+	foundAccount, err := s.store.GetAccount(context.Background(), req.ID)
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
+			"message": err.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, foundAccount)
+}

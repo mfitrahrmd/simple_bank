@@ -2,8 +2,10 @@ package api
 
 import (
 	"context"
+	"database/sql"
 	"github.com/gin-gonic/gin"
 	db "github.com/mfitrahrmd/simple_bank/database/sqlc"
+	"github.com/pkg/errors"
 	"net/http"
 )
 
@@ -53,6 +55,12 @@ func (s *Server) GetAccount(c *gin.Context) {
 
 	foundAccount, err := s.store.GetAccount(context.Background(), req.ID)
 	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			c.AbortWithStatusJSON(http.StatusNotFound, gin.H{
+				"message": err.Error(),
+			})
+			return
+		}
 		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
 			"message": err.Error(),
 		})
